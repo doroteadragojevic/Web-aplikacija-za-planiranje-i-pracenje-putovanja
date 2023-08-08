@@ -1,20 +1,13 @@
-package fer.hr.zavrsni.domain;
+package fer.hr.zavrsni.dto;
 
-import java.sql.Time;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.Date;
 
-import jakarta.persistence.*;
+import fer.hr.zavrsni.domain.Aktivnost;
+import fer.hr.zavrsni.domain.Mjesto;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
 
-@Entity
-@NoArgsConstructor
-@Data
-public class Aktivnost {
-
-	@Id
-	@GeneratedValue
+public class AktivnostDTO {
 	private Long idAktivnost;
 
 	@NotNull(message = "Naziv aktivnost ne smije biti null")
@@ -34,17 +27,15 @@ public class Aktivnost {
 	private String URL;
 
 	private String detalji;
+	
 
-
-	public Aktivnost() {
-	}
-
-	public Aktivnost(@NotNull(message = "Naziv aktivnost ne smije biti null") String nazivAktivnosti,
+	public AktivnostDTO(Long idAktivnost, @NotNull(message = "Naziv aktivnost ne smije biti null") String nazivAktivnosti,
 			@NotNull(message = "Datum odrzavanja aktivnosti ne smije biti null.") Date datumOdrzavanja,
 			@NotNull(message = "Vrijeme pocetka ne smije biti null") LocalTime vrijemePocetka,
 			@NotNull(message = "Vrijeme zavrsetka ne smije biti null") LocalTime vrijemeZavrsetka, Long cijena, String uRL,
 			String detalji) {
 		super();
+		this.idAktivnost = idAktivnost;
 		this.nazivAktivnosti = nazivAktivnosti;
 		this.datumOdrzavanja = datumOdrzavanja;
 		this.vrijemePocetka = vrijemePocetka;
@@ -117,5 +108,10 @@ public class Aktivnost {
 	public void setDetalji(String detalji) {
 		this.detalji = detalji;
 	}
+	
+	public static AktivnostDTO toDto(Aktivnost aktivnost) {
+		return new AktivnostDTO(aktivnost.getIdAktivnost(), aktivnost.getNazivAktivnosti(), aktivnost.getDatumOdrzavanja(), aktivnost.getVrijemePocetka(), aktivnost.getVrijemeZavrsetka(), aktivnost.getCijena(), aktivnost.getURL(), aktivnost.getDetalji());
+	}
+
 
 }

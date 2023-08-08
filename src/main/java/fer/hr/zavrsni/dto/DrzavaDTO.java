@@ -1,25 +1,18 @@
-package fer.hr.zavrsni.domain;
+package fer.hr.zavrsni.dto;
 
-import jakarta.persistence.*;
+import fer.hr.zavrsni.domain.Drzava;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
 
-@Entity
-@Data
-@NoArgsConstructor
-public class Drzava {
+public class DrzavaDTO {
 
-	@Id
+	@NotNull
 	private String ISOOznaka;
 
 	@NotNull(message = "Naziv drzave ne smije biti null")
 	private String nazivDrzave;
 
-	public Drzava() {}
-	
-	public Drzava(String iSOOznaka, @NotNull(message = "Naziv drzave ne smije biti null") String nazivDrzave) {
-		super();
-		ISOOznaka = iSOOznaka;
+	public DrzavaDTO(String ISOOznaka, String nazivDrzave) {
+		this.ISOOznaka = ISOOznaka;
 		this.nazivDrzave = nazivDrzave;
 	}
 
@@ -37,6 +30,10 @@ public class Drzava {
 
 	public void setNazivDrzave(String nazivDrzave) {
 		this.nazivDrzave = nazivDrzave;
+	}
+
+	public static DrzavaDTO toDto(Drzava d) {
+		return new DrzavaDTO(d.getISOOznaka(), d.getNazivDrzave());
 	}
 
 }
